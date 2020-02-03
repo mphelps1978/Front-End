@@ -26,7 +26,7 @@ const UserRegistrationForm = ({values, errors, touched, status}) => {
         {touched.email && errors.email && (
           <p>{errors.email}</p>
         )}
-        <label htmlFor= "username">Name:</label>
+        <label htmlFor= "username">UserName:</label>
         <Field id="username" type="text" name="username" />
         {touched.username && errors.username && (
           <p>{errors.username}</p>
