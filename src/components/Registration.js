@@ -50,7 +50,11 @@ const UserRegistrationForm = ({values, errors, touched, status}) => {
           <li>Password: {user.password}</li>
           </ul>
 
+
+        ))}
+
         ))} 
+
       </div>
     </div>
   );
@@ -74,13 +78,23 @@ const FormikUserRegistrationForm = withFormik({
 
   }),
   handleSubmit(values, { setStatus, resetForm }) {
+
+    this.preventDefault()
+
+
     console.log("submitting! ", values);
     axios
       .post("https://choretracker01.herokuapp.com/api/auth/register", values)
       .then(res => {
         console.log("success", res);
+
+        setStatus(res.data);
+        localStorage.setItem(res.data.token)
+        this.props.history.push('/dashboard')
+
         setStatus(res.data); 
         resetForm();
+
       })
       .catch(err => console.log(err.response));
   }
