@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios"
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import cors from "cors";
 
 
 
@@ -75,7 +76,7 @@ const FormikUserRegistrationForm = withFormik({
   handleSubmit(values, { setStatus, resetForm }) {
     console.log("submitting! ", values);
     axios
-      .post("https://reqres.in/api/users/", values)
+      .post("https://choretracker01.herokuapp.com/api/auth/register", values)
       .then(res => {
         console.log("success", res);
         setStatus(res.data); 
