@@ -20,14 +20,12 @@ class Login extends React.Component {
 
   login = e => {
     e.preventDefault();
-
-
     axios
-      .post("", this.state.credentials)
+      .post("https://choretracker01.herokuapp.com/api/auth/login", this.state.credentials)
       .then(res => {
-        // console.log(res);
-        localStorage.setItem("token", res.data.payload);
-        this.props.history.push("/bubbles");
+        // console.log("login results: ", res);
+        localStorage.setItem("token", res.data.token);
+        this.props.history.push("/dashboard");
       })
       .catch(err => {
         console.log(err);
