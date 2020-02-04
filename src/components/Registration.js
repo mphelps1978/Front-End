@@ -89,8 +89,8 @@ const FormikUserRegistrationForm = withFormik({
         console.log("success", res);
 
         setStatus(res.data);
-        localStorage.setItem(res.data.token)
-        this.props.history.push('/dashboard')
+        localStorage.setItem(res.data.token)  // Store Access Token
+        this.props.history.push('/dashboard') // Redirect to Dashboard
 
         setStatus(res.data); 
         resetForm();
