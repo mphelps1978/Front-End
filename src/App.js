@@ -22,7 +22,7 @@ function App() {
         </Router>
 
         <FormikUserRegistrationForm />
-        <Dashboard/>
+
 
     </div>
   );
