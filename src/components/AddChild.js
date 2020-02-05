@@ -73,14 +73,11 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-
 const AddChild = props => {
   const classes = useStyles();
   const [chores, setChores] = useState([]);
   const [child, setChild] = useState("");
   const [open, setOpen] = useState(false);
-
 
   const handleOpen = () => {
     setOpen(true);
@@ -98,16 +95,15 @@ const AddChild = props => {
     console.log("These are values", values);
     axios
       .post("https://choretracker01.herokuapp.com/api/chores/1", values)
-      .then(res => {
-        console.log("success", res);
-        console.log("this is response data", res.data)
-      })
-      .catch(error => console.log(error.response, "Didn't work"));
+        .then(res => {
+          console.log("success", res);
+          console.log("this is response data", res.data)
+        })
+        .catch(error => console.log(error.response, "Didn't work"));
       
   };
 
   return (
-    
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div>
@@ -171,7 +167,6 @@ const AddChild = props => {
                     label="username"
                     name="username"
                     autoComplete="uname"
-                    // value= "username"
                     helperText={
                       errors.username && touched.username
                         ? errors.username
