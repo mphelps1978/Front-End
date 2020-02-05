@@ -24,8 +24,12 @@ import * as yup from "yup";
 
 let SignupSchema = yup.object().shape({
   name: yup.string().required("This field is required."),
-  description: yup.string().required("This field is required."),
-  child: yup.string().required("This field is required."),
+  username: yup.string().required("This field is required."),
+  password: yup
+    .string()
+    .min(6, "Password is too short.")
+    .max(20, "Password is too long.")
+    .required("This field is required.")
 });
 
 const useStyles = makeStyles(theme => ({
@@ -71,7 +75,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const ChoreAdder = props => {
+const AddChild = props => {
   const classes = useStyles();
   const [chores, setChores] = useState([]);
   const [child, setChild] = useState("");
@@ -108,7 +112,7 @@ const ChoreAdder = props => {
       <CssBaseline />
       <div>
         <button type="button" onClick={handleOpen}>
-          ADD CHORE
+          ADD CHILD
         </button>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -125,13 +129,13 @@ const ChoreAdder = props => {
           <Fade in={open}>
             <div className={classes.paper}>
               <Typography component="h1" variant="h5">
-                Add Chore
+                Add Child
               </Typography>
               <Formik
                 initialValues={{
                   name: "",
-                  description: "",
-                  child: "",
+                  username: "",
+                  password: "",
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={FormSubmit}
@@ -148,7 +152,7 @@ const ChoreAdder = props => {
                         fullWidth
                         onChange={handleChange}
                         id="name"
-                        label="Name of Chore"
+                        label="Child's Name"
                         autoFocus
                         helperText={
                           errors.name && touched.name
@@ -158,45 +162,41 @@ const ChoreAdder = props => {
                       />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        error={errors.description && touched.description}
-                        variant="outlined"
-                        fullWidth
-                        onChange={handleChange}
-                        id="description"
-                        label="description"
-                        name="description"
-                        autoComplete="description"
-                        multiline
-                        rowsMax="4"
-                        // value= "username"
-                        helperText={
-                          errors.description && touched.description
-                            ? errors.description
-                            : null
-                        }
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="child">Assign Child</InputLabel>
-                      <Select
-                        labelId="child"
-                        id="child"
-                        value={child}
-                        onChange={handleChildChange}
-                        autoWidth
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={"Johnny"}>Johnny</MenuItem>
-                        <MenuItem value={"Peter"}>Peter</MenuItem>
-                        <MenuItem value={"Paul"}>Paul</MenuItem>
-                      </Select>
-                      <FormHelperText>Select Child</FormHelperText>
-                    </FormControl>
-                    </Grid>
+                  <TextField
+                    error={errors.username && touched.username}
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    id="username"
+                    label="username"
+                    name="username"
+                    autoComplete="uname"
+                    // value= "username"
+                    helperText={
+                      errors.username && touched.username
+                        ? errors.username
+                        : null
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    error={errors.password && touched.password}
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                    helperText={
+                      errors.password && touched.password
+                        ? errors.password
+                        : null
+                    }
+                  />
+                </Grid>
                   </Grid>
                   <Button
                     type="submit"
@@ -220,4 +220,4 @@ const ChoreAdder = props => {
   );
 };
 
-export default ChoreAdder;
+export default AddChild;
