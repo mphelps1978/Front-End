@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
+    width: "100%",
     marginTop: theme.spacing(3)
   },
   submit: {
@@ -57,31 +57,22 @@ const SignUp = props => {
   const [users, setUsers] = useState([]);
 
 
-
-  // const [users, setUsers] = useState([]);
-
-  // useEffect(() => {
-  //   console.log("status has changed!", props.status);
-
-  //   props.status && setUsers(users => [...users, props.status]);
-  // }, [props.status]);
-
   const FormSubmit = (values, { setSubmitting, resetForm, setStatus, status}) => {
     console.log(values);
     axios
       .post("https://choretracker01.herokuapp.com/api/auth/register", values)
-      .then(res => {
-        console.log("success", res);
-        console.log("this is response data", res.data)
-        // setUsers
+        .then(res => {
+          console.log("success", res);
+          console.log("this is response data", res.data)
         
+          
 
-        setStatus(res.data);
-       // localStorage.setItem(res.data.token)  // Store Access Token
-        //this.props.history.push('/dashboard') // Redirect to Dashboard
-        // setUsers(users => [...users, res.data]); 
-        // console.log("this is users", users)
-        resetForm();
+          setStatus(res.data);
+        // localStorage.setItem(res.data.token)  // Store Access Token
+          //this.props.history.push('/dashboard') // Redirect to Dashboard
+          // setUsers(users => [...users, res.data]); 
+          // console.log("this is users", users)
+          resetForm();
       })
       .catch(error => console.log(error.response, "Didn't work"));
       // .finally(() => {
@@ -106,16 +97,6 @@ const SignUp = props => {
           }}
           validationSchema={SignupSchema}
           onSubmit={FormSubmit}
-              // setUsers(users => [...users, values]);
-      
-             // setStatus(res.data);
-              // localStorage.setItem(res.data.token)  // Store Access Token
-              // this.props.history.push('/dashboard') // Redirect to Dashboard
-      
-              //setStatus(res.data); 
-              //resetForm();
-              // console.log("These are the users", users);
-
         >
           {({ errors, handleChange, touched, status }) => (
             <Form className={classes.form}>
@@ -148,7 +129,6 @@ const SignUp = props => {
                     label="username"
                     name="username"
                     autoComplete="uname"
-                    // value= "username"
                     helperText={
                       errors.username && touched.username
                         ? errors.username

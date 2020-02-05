@@ -24,11 +24,6 @@ import { ChildrenList } from './ChildrenList';
 import ChoreAdder  from './ChoreAdder';
 import AddChild from './AddChild';
 
-// import { mainListItems, secondaryListItems } from './listItems';
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -181,10 +176,8 @@ const Dashboard = props => {
           LIST OF CHILDREN
         </div>
         <Divider />
-        {/* <List>{mainListItems}</List> */}
         LIST OF CHILDREN
         <Divider />
-        {/* <List>{secondaryListItems}</List> */}
         <ChildrenList />
       </Drawer>
       <main className={classes.content}>
@@ -200,29 +193,17 @@ const Dashboard = props => {
 
               </Paper>
             </Grid>
-            {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
                 <h2>Family Chore List</h2>
                 <ChoreList/>
               </Paper>
             </Grid>
-            {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
                 <h4>GAMIFY COMPONENTS</h4>
                 <p>High Score: Child and Total</p>
                 <p>Longest Streak: Child and Total</p>
-
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                {/* <Orders /> */}
-
               </Paper>
             </Grid>
           </Grid>
