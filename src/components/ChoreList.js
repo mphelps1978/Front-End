@@ -151,6 +151,8 @@ export const ChoreList = props => {
   const [choresList, setChoresList]= useState([]);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
