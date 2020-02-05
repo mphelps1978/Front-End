@@ -21,6 +21,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
 import { ChoreList } from './ChoreList';
 import { ChildrenList } from './ChildrenList';
+import ChoreAdder  from './ChoreAdder';
 
 // import { mainListItems, secondaryListItems } from './listItems';
 // import Chart from './Chart';
@@ -193,7 +194,7 @@ const Dashboard = props => {
               <Paper className={fixedNavHeightPaper}>
                 {/* <Chart /> */}
                 <Button color="inherit">Home</Button>
-                <Button color="inherit">Add Chore</Button>
+                <ChoreAdder/>
                 <Button color="inherit">Add Child</Button>
 
               </Paper>

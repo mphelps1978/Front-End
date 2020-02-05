@@ -131,7 +131,6 @@ const childArray = [
   "Luna Lovegood",
   "Neville Longbottom",
   "Hermione Granger",
- 
   "Draco Malfoy"
 ];
 

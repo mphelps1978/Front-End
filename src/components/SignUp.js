@@ -79,8 +79,8 @@ const SignUp = props => {
         setStatus(res.data);
        // localStorage.setItem(res.data.token)  // Store Access Token
         //this.props.history.push('/dashboard') // Redirect to Dashboard
-        setUsers(users => [...users, res.data]); 
-        console.log("this is users", users)
+        // setUsers(users => [...users, res.data]); 
+        // console.log("this is users", users)
         resetForm();
       })
       .catch(error => console.log(error.response, "Didn't work"));

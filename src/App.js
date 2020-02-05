@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from './components/Login'
 import PrivateRoute from './utils/PrivateRoute'
 import SignUp from './components/SignUp';
+import ChoreList from './components/ChoreList';
+import ChoreAdder from './components/ChoreAdder';
 
 
 
@@ -15,16 +17,22 @@ function App() {
     <div className="App">
 
         <Router>
-          <Route exact path = '/' component = {Login} />
             <Switch>
+              <Route exact path = '/Registration'>
+                <SignUp/>
+              </Route>
+              <Route exact path = '/AddChore'>
+                <ChoreAdder/>
+              </Route>
               <PrivateRoute exact path = '/dashboard' component = {Dashboard} />
+              <Route path = '/' component = {Login} />
 
             </Switch>
         </Router>
 
         {/* <FormikUserRegistrationForm /> */}
-        <Dashboard />
-        <SignUp/>
+        {/* <Dashboard /> */}
+        {/* <SignUp/> */}
         
 
     </div>
