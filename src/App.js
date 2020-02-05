@@ -22,9 +22,9 @@ function App() {
             </Switch>
         </Router>
 
-        <FormikUserRegistrationForm />
+        {/* <FormikUserRegistrationForm /> */}
         <Dashboard />
-        {/* <SignUp/> */}
+        <SignUp/>
         
 
     </div>

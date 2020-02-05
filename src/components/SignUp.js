@@ -72,12 +72,15 @@ const SignUp = props => {
       .post("https://choretracker01.herokuapp.com/api/auth/register", values)
       .then(res => {
         console.log("success", res);
+        console.log("this is response data", res.data)
+        // setUsers
+        
 
         setStatus(res.data);
        // localStorage.setItem(res.data.token)  // Store Access Token
         //this.props.history.push('/dashboard') // Redirect to Dashboard
-        //setUsers(users => [...users, status]); 
-        console.log("these are the users", users)
+        setUsers(users => [...users, res.data]); 
+        console.log("this is users", users)
         resetForm();
       })
       .catch(error => console.log(error.response, "Didn't work"));
