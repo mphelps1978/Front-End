@@ -77,6 +77,7 @@ const ChoreAdder = props => {
   const [child, setChild] = useState("");
   const [open, setOpen] = useState(false);
 
+
   const handleOpen = () => {
     setOpen(true);
   };
