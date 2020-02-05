@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from './components/Login'
 import PrivateRoute from './utils/PrivateRoute'
+import SignUp from './components/SignUp';
 
 
 
@@ -22,7 +23,9 @@ function App() {
         </Router>
 
         <FormikUserRegistrationForm />
-
+        <Dashboard />
+        {/* <SignUp/> */}
+        
 
     </div>
   );

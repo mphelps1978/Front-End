@@ -13,6 +13,8 @@ const UserRegistrationForm = ({values, errors, touched, status}) => {
     console.log("status has changed!", status);
 
     status && setUsers(users => [...users, status]);
+
+    console.log("these are users", users);
   }, [status]);
   return (
     <div>
@@ -53,8 +55,6 @@ const UserRegistrationForm = ({values, errors, touched, status}) => {
 
         ))}
 
-        ))} 
-
       </div>
     </div>
   );
@@ -79,7 +79,7 @@ const FormikUserRegistrationForm = withFormik({
   }),
   handleSubmit(values, { setStatus, resetForm }) {
 
-    this.preventDefault()
+   // this.preventDefault()
 
 
     console.log("submitting! ", values);
