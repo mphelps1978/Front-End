@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,13 +19,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
-import { ChoreList } from './ChoreList';
-import { ChildrenList } from './ChildrenList';
-
-// import { mainListItems, secondaryListItems } from './listItems';
-// import Chart from './Chart';
-// import Deposits from './Deposits';
-// import Orders from './Orders';
 
 function Copyright() {
   return (
@@ -116,12 +109,13 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    backgroundColor: 'red'
   },
-  navpaper: {
-    padding: theme.spacing(2),
+  ulflex: {
+    backgroundColor: "red",
     display: 'flex',
     overflow: 'auto',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent:'space-evenly'
   },
   fixedHeight: {
@@ -132,104 +126,39 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Dashboard = props => {
+const childArray = [
+  "Harry Potter",
+  "Luna Lovegood",
+  "Neville Longbottom",
+  "Hermione Granger",
+ 
+  "Draco Malfoy"
+];
+
+export const ChildrenList = props => {
+  const [choresList, setChoresList]= useState([]);
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const fixedNavHeightPaper = clsx(classes.navpaper, classes.fixedNavHeight);
+  const ulFlexList = clsx(classes.paper);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            (Parents Name) Chore Tracker
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <Button color="inherit">Logout</Button>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          LIST OF CHILDREN
-        </div>
-        <Divider />
-        {/* <List>{mainListItems}</List> */}
-        LIST OF CHILDREN
-        <Divider />
-        {/* <List>{secondaryListItems}</List> */}
-        <ChildrenList />
-      </Drawer>
+      
+      
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-          <Grid item xs={12}>
-              <Paper className={fixedNavHeightPaper}>
-                {/* <Chart /> */}
-                <Button color="inherit">Home</Button>
-                <Button color="inherit">Add Chore</Button>
-                <Button color="inherit">Add Child</Button>
 
-              </Paper>
-            </Grid>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Chart /> */}
-                <h2>Family Chore List</h2>
-                <ChoreList/>
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                {/* <Deposits /> */}
-                <h4>GAMIFY COMPONENTS</h4>
-                <p>High Score: Child and Total</p>
-                <p>Longest Streak: Child and Total</p>
-
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
             <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                {/* <Orders /> */}
-
-              </Paper>
+              <Paper className={classes.ulflex}>
+          {childArray.map(child => (
+            <Button key={child}>{child}</Button>
+          ))}
+        </Paper>
             </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
+      </Container>
       </main>
     </div>
   );
 };
-export default Dashboard;
+
+export default ChildrenList;
