@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from "axios";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -139,6 +140,23 @@ export const ChildrenList = props => {
   const classes = useStyles();
   const ulFlexList = clsx(classes.paper);
 
+  const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+ 
+    
+    
+    axios.get(`https://rickandmortyapi.com/api/character/`).then(response => {
+      console.log(response);
+ 
+     
+      setData(response.data.results);
+    });
+
+
+  }, []);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -149,8 +167,8 @@ export const ChildrenList = props => {
 
             <Grid item xs={12}>
               <Paper className={classes.ulflex}>
-          {childArray.map(child => (
-            <Button key={child}>{child}</Button>
+          {data.map(data => (
+            <Button key={data}>{data.name}</Button>
           ))}
         </Paper>
             </Grid>
