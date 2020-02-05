@@ -55,6 +55,7 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
+    backgroundColor: 'gray',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -201,18 +202,27 @@ const Dashboard = props => {
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
                 {/* <Chart /> */}
+                <p>HOME PAGE IS TOTAL LIST OF CHOIRS
+                THEY CLICK ON CHILD AND THIS CHANGESTO CHILD NAME AND THEIR CHOIRS</p>
               </Paper>
             </Grid>
             {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 {/* <Deposits /> */}
+                <h4>GAMIFY COMPONENTS</h4>
+                <p>High Score: Child and Total</p>
+                <p>Longest Streak: Child and Total</p>
+
+
+
               </Paper>
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 {/* <Orders /> */}
+
               </Paper>
             </Grid>
           </Grid>
