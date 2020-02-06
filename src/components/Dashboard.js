@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,6 +23,9 @@ import { ChoreList } from './ChoreList';
 import { ChildrenList } from './ChildrenList';
 import ChoreAdder  from './ChoreAdder';
 import AddChild from './AddChild';
+
+import {axiosWithAuth} from '../utils/axiosWithAuth'
+
 
 function Copyright() {
   return (
@@ -129,9 +132,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
+
+
+
 const Dashboard = props => {
+
+
+
+  const id = localStorage.getItem('id');
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const [data, setData] = useState([]);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -140,6 +152,24 @@ const Dashboard = props => {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const fixedNavHeightPaper = clsx(classes.navpaper, classes.fixedNavHeight);
+
+
+  useEffect(() => {
+
+      axiosWithAuth()
+      .get (`/api/parent/${id}`)
+      .then(res => {
+        console.log('res.data: ',res.data)
+        setData(res.data)
+
+      })
+      .catch(err => console.log(err))
+
+  }, [])
+
+
+
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -155,7 +185,7 @@ const Dashboard = props => {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            (Parents Name) Chore Tracker
+            {data.name} Chore Tracker
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

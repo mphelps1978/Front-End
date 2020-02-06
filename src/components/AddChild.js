@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
+import {axiosWithAuth} from "../utils/axiosWithAuth";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -73,11 +73,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+const initialValues = {
+  name: "",
+  username: "",
+  password: ""
+}
+
 const AddChild = props => {
   const classes = useStyles();
+  const [childinfo, setChildinfo] = useState(initialValues)
   const [chores, setChores] = useState([]);
   const [child, setChild] = useState("");
   const [open, setOpen] = useState(false);
+  const id = localStorage.getItem('id')
 
   const handleOpen = () => {
     setOpen(true);
@@ -87,20 +95,22 @@ const AddChild = props => {
     setOpen(false);
   };
 
-  const handleChildChange = event => {
-    setChild(event.target.value);
+  const handleChange = event => {
+    setChildinfo(event.target.value);
   };
 
-  const FormSubmit = ({values}) => {
-    console.log("These are values", values);
-    axios
-      .post("https://choretracker01.herokuapp.com/api/chores/1", values)
+  const FormSubmit = (e) => {
+    e.preventDefault()
+    console.log("These are values", childinfo);
+    axiosWithAuth()
+      .post(`/api/auth/register/${id}`, childinfo)
         .then(res => {
           console.log("success", res);
           console.log("this is response data", res.data)
+          handleClose()
         })
         .catch(error => console.log(error.response, "Didn't work"));
-      
+
   };
 
   return (
@@ -128,13 +138,8 @@ const AddChild = props => {
                 Add Child
               </Typography>
               <Formik
-                initialValues={{
-                  name: "",
-                  username: "",
-                  password: "",
-                }}
                 validationSchema={SignupSchema}
-                onSubmit={FormSubmit}
+                onSubmit={(e)=> FormSubmit()}
               >
               {({ errors, handleChange, touched, status }) => (
                 <Form className={classes.form}>
@@ -146,7 +151,8 @@ const AddChild = props => {
                         name="name"
                         variant="outlined"
                         fullWidth
-                        onChange={handleChange}
+                        onChange={(e) => setChildinfo({...childinfo, name: e.target.value})}
+                        value={childinfo.name}
                         id="name"
                         label="Child's Name"
                         autoFocus
@@ -162,7 +168,8 @@ const AddChild = props => {
                     error={errors.username && touched.username}
                     variant="outlined"
                     fullWidth
-                    onChange={handleChange}
+                    onChange={(e) => setChildinfo({...childinfo, username: e.target.value})}
+                    value={childinfo.username}
                     id="username"
                     label="username"
                     name="username"
@@ -179,7 +186,8 @@ const AddChild = props => {
                     error={errors.password && touched.password}
                     variant="outlined"
                     fullWidth
-                    onChange={handleChange}
+                    onChange={(e) => setChildinfo({...childinfo, password: e.target.value})}
+                    value={childinfo.password}
                     name="password"
                     label="Password"
                     type="password"
@@ -202,7 +210,7 @@ const AddChild = props => {
                     onClick={FormSubmit}
                     onSubmit={handleClose}
                   >
-                    Add Chore
+                    Add Child
                   </Button>
                 </Form>
               )}
