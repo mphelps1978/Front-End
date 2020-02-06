@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
+import {axiosWithAuth} from "../utils/axiosWithAuth";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -89,14 +89,14 @@ const ChoreAdder = props => {
 
   const FormSubmit = ({values}) => {
     console.log("These are values", values);
-    axios
+    axiosWithAuth()
       .post("https://choretracker01.herokuapp.com/api/chores/1", values)
         .then(res => {
           console.log("success", res);
           console.log("this is response data", res.data)
         })
         .catch(error => console.log(error.response, "Didn't work"));
-      
+
   };
 
   return (

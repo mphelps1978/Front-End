@@ -16,9 +16,7 @@ function App() {
 
         <Router>
             <Switch>
-              <Route exact path = '/Registration'>
-                <SignUp/>
-              </Route>
+              <Route exact path = '/register' component= {SignUp} />
               <PrivateRoute exact path = '/dashboard' component = {Dashboard} />
               <Route path = '/' component = {Login} />
 
@@ -27,7 +25,7 @@ function App() {
 
         {/* <Dashboard /> */}
         {/* <SignUp/> */}
-        
+
 
     </div>
   );

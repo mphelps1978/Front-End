@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import axios from "axios";
+import {axiosWithAuth} from "../utils/axiosWithAuth";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -141,35 +141,48 @@ export const ChildrenList = props => {
   const ulFlexList = clsx(classes.paper);
 
   const [data, setData] = useState([]);
+  const id = localStorage.getItem('id')
 
 
   useEffect(() => {
- 
-    
-    
-    axios.get(`https://rickandmortyapi.com/api/character/`).then(response => {
-      console.log(response);
- 
-     
-      setData(response.data.results);
+
+
+
+    axiosWithAuth()
+    .get(`/api/parent/children/${id}`).then(response => {
+      console.log('child list response: ', response);
+      setData(response.data);
+      // console.log('new data: ', data);
+
     });
-
-
-  }, []);
+  }, [data]);
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      
-      
+
+
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
 
             <Grid item xs={12}>
               <Paper className={classes.ulflex}>
-          {data.map(data => (
+
+              {
+                !data ? (
+                  <h2>No Children</h2>
+                ):(
+                  data.map(data => (
+                    <Button key={data}>{data.name}</Button>
+                    ))
+                )
+
+              }
+
+
+          {/* {data.map(data => (
             <Button key={data}>{data.name}</Button>
-          ))}
+          ))} */}
         </Paper>
             </Grid>
       </Container>
