@@ -23,13 +23,9 @@ import { Formik, Form } from "formik";
 import * as yup from "yup";
 
 let SignupSchema = yup.object().shape({
-  name: yup.string().required("This field is required."),
-  username: yup.string().required("This field is required."),
-  password: yup
-    .string()
-    .min(6, "Password is too short.")
-    .max(20, "Password is too long.")
-    .required("This field is required.")
+  name: yup.string(),
+  username: yup.string(),
+  email: yup.string().email('Invalid Email'),
 });
 
 const useStyles = makeStyles(theme => ({
@@ -73,20 +69,23 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const initialValues = {
-  name: "",
-  username: "",
-  password: ""
-}
 
 const AddChild = props => {
+
+const initialValues = {
+  username: "",
+  name: "",
+  email: ""
+
+}
+;
+
+  // console.log('EditParent Props: ' , props );
   const classes = useStyles();
-  const [childinfo, setChildinfo] = useState(initialValues)
-  const [chores, setChores] = useState([]);
-  const [child, setChild] = useState("");
   const [open, setOpen] = useState(false);
-  const id = localStorage.getItem('id');
-  const childArrayLength = 0;
+  const [newparent, setNewparent] = useState(initialValues)
+console.log(newparent);
+
 
   const handleOpen = () => {
     setOpen(true);
@@ -96,15 +95,12 @@ const AddChild = props => {
     setOpen(false);
   };
 
-  const handleChange = event => {
-    setChildinfo(event.target.value);
-  };
 
   const FormSubmit = (e) => {
     e.preventDefault()
-    console.log("These are values", childinfo);
+    console.log("Changing Parent Info", newparent);
     axiosWithAuth()
-      .post(`/api/auth/register/${id}`, childinfo)
+      .put(`/api/parent/${props.id}`, newparent)
         .then(res => {
           console.log("success", res);
           console.log("this is response from add child", res)
@@ -119,7 +115,7 @@ const AddChild = props => {
       <CssBaseline />
       <div>
         <button type="button" onClick={handleOpen}>
-          ADD CHILD
+          User Settings
         </button>
         <Modal
           aria-labelledby="transition-modal-title"
@@ -136,7 +132,7 @@ const AddChild = props => {
           <Fade in={open}>
             <div className={classes.paper}>
               <Typography component="h1" variant="h5">
-                Add Child
+                Edit Information
               </Typography>
               <Formik
                 validationSchema={SignupSchema}
@@ -152,10 +148,11 @@ const AddChild = props => {
                         name="name"
                         variant="outlined"
                         fullWidth
-                        onChange={(e) => setChildinfo({...childinfo, name: e.target.value})}
-                        value={childinfo.name}
+                        onChange={(e) => setNewparent({...newparent, name: e.target.value})}
+                        value={newparent.name}
                         id="name"
-                        label="Child's Name"
+                        label='name'
+                        defaultValue={props.name}
                         autoFocus
                         helperText={
                           errors.name && touched.name
@@ -169,12 +166,13 @@ const AddChild = props => {
                     error={errors.username && touched.username}
                     variant="outlined"
                     fullWidth
-                    onChange={(e) => setChildinfo({...childinfo, username: e.target.value})}
-                    value={childinfo.username}
+                    onChange={(e) => setNewparent({...newparent, username: e.target.value})}
+                    value={newparent.username}
                     id="username"
                     label="username"
                     name="username"
                     autoComplete="uname"
+                    defaultValue={props.username}
                     helperText={
                       errors.username && touched.username
                         ? errors.username
@@ -187,13 +185,14 @@ const AddChild = props => {
                     error={errors.password && touched.password}
                     variant="outlined"
                     fullWidth
-                    onChange={(e) => setChildinfo({...childinfo, password: e.target.value})}
-                    value={childinfo.password}
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
+                    onChange={(e) => setNewparent({...newparent, email: e.target.value})}
+                    value={newparent.email}
+                    name="email"
+                    label="email"
+                    type="email"
+                    id="email"
+                    autoComplete="email"
+                    defaultValue={props.email}
                     helperText={
                       errors.password && touched.password
                         ? errors.password
@@ -211,8 +210,9 @@ const AddChild = props => {
                     onClick={FormSubmit}
                     onSubmit={handleClose}
                   >
-                    Add Child
+                    Save
                   </Button>
+
                 </Form>
               )}
               </Formik>

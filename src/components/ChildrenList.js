@@ -21,51 +21,13 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
-const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  appBar: {
-    backgroundColor: 'gray',
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
+
   menuButton: {
     marginRight: 36,
   },
@@ -75,87 +37,71 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
-  },
+
+
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
+
   },
-  container: {
-    paddingTop: theme.spacing(0),
-    paddingBottom: theme.spacing(4),
-  },
+
   paper: {
-    padding: theme.spacing(2),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    backgroundColor: 'red'
+    marginBottom: theme.spacing(1),
   },
+
   ulflex: {
-    backgroundColor: "red",
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
-    justifyContent:'space-evenly'
+    justifyContent:'space-evenly',
+    maxWidth: '100%',
+    backgroundColor:'gray',
+    color: 'white',
+    marginBottom: theme.spacing(1),
+
+
   },
-  fixedHeight: {
-    height: 240,
-  },
-  fixedNavHeight: {
-    height: 60,
+  dataflex: {
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'auto',
+    justifyContent:'space-evenly',
+    maxWidth: '100%',
+    color: 'white',
+    marginBottom: theme.spacing(1),
+
+
+
+
   },
 }));
 
-const childArray = [
-  "Harry Potter",
-  "Luna Lovegood",
-  "Neville Longbottom",
-  "Hermione Granger",
-  "Draco Malfoy"
-];
+
 
 export const ChildrenList = props => {
-  const [choresList, setChoresList]= useState([]);
+  const [choresList, setChoresList]= useState(null);
   const classes = useStyles();
-  const ulFlexList = clsx(classes.paper);
-
-  const [data, setData] = useState([]);
-  const id = localStorage.getItem('id')
+  const [data, setData] = useState(null);
+  const id = localStorage.getItem('id');
 
 
-  useEffect(() => {
-
-
+  useEffect( () => {
 
     axiosWithAuth()
-    .get(`/api/parent/children/${id}`).then(response => {
-      console.log('child list response: ', response);
-      setData(response.data);
+    .get(`/api/parent/children/${id}`)
+    .then(response => {
+      // console.log('child list response: ', response);
+      // console.log('childs data length',response.data.length);
+      // console.log('childs data',response.data);
+      setData(response.data)
+
       // console.log('new data: ', data);
 
     });
-  }, [data]);
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -165,27 +111,35 @@ export const ChildrenList = props => {
       <main className={classes.content}>
         <Container maxWidth="lg" className={classes.container}>
 
-            <Grid item xs={12}>
-              <Paper className={classes.ulflex}>
+          <Grid  item xs={12}>
+            <Paper className={classes.ulflex}>
 
               {
                 !data ? (
                   <h2>No Children</h2>
                 ):(
                   data.map(data => (
-                    <Button key={data}>{data.name}</Button>
+                    <div key={data.id}>
+                    <h4>{data.name}</h4>
+                    <h4 >Total Points: {data.total_points}</h4>
+                    <h4 >Streaks: {data.current_streaks}</h4>
+                    <Button
+                    variant="contained"
+                    color="secondary">
+                    Remove Child
+                    </Button>
+                    <Divider />
+                    </div>
+
+
                     ))
                 )
 
               }
 
-
-          {/* {data.map(data => (
-            <Button key={data}>{data.name}</Button>
-          ))} */}
-        </Paper>
-            </Grid>
-      </Container>
+            </Paper>
+          </Grid>
+        </Container>
       </main>
     </div>
   );

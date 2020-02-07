@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -26,7 +25,6 @@ import ChoreAdder  from './ChoreAdder';
 import AddChild from './AddChild';
 
 import {axiosWithAuth} from '../utils/axiosWithAuth'
-import EditParent from "./EditParent"
 
 
 function Copyright() {
@@ -127,7 +125,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent:'space-evenly'
   },
   fixedHeight: {
-    height: 400,
+    height: 240,
   },
   fixedNavHeight: {
     height: 60,
@@ -146,8 +144,6 @@ const Dashboard = props => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [data, setData] = useState([]);
-  const history = useHistory();
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -171,10 +167,7 @@ const Dashboard = props => {
 
   }, [])
 
-  const logout = () => {
-    localStorage.clear()
-    history.push('/login')
-  }
+
 
 
   return (
@@ -199,15 +192,7 @@ const Dashboard = props => {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <EditParent
-          id={data.id}
-          name={data.name}
-          username={data.username}
-          email={data.email}
-          />
-          <Button
-          color="primary"
-          onClick={() => logout()}>Logout</Button>
+          <Button color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -221,8 +206,8 @@ const Dashboard = props => {
           LIST OF CHILDREN
         </div>
         <Divider />
-        <h4>{data.name}'s CHILDREN</h4>
-        {/* <Divider /> */}
+        LIST OF CHILDREN
+        <Divider />
         <ChildrenList />
       </Drawer>
       <main className={classes.content}>

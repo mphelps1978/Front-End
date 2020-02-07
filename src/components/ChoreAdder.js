@@ -17,6 +17,7 @@ import Select from '@material-ui/core/Select';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import {ChildrenList} from './ChildrenList';
 
 
 import { Formik, Form } from "formik";
@@ -69,11 +70,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+ const initialValues={
+  name: "",
+  description: ""
+
+}
+
 const ChoreAdder = props => {
   const classes = useStyles();
-  const [chores, setChores] = useState([]);
-  const [child, setChild] = useState("");
+  const [chores, setChores] = useState(initialValues);
   const [open, setOpen] = useState(false);
+  const id = localStorage.getItem('id');
 
   const handleOpen = () => {
     setOpen(true);
@@ -83,17 +90,17 @@ const ChoreAdder = props => {
     setOpen(false);
   };
 
-  const handleChildChange = event => {
-    setChild(event.target.value);
-  };
 
-  const FormSubmit = ({values}) => {
-    console.log("These are values", values);
+
+  const FormSubmit = () => {
+    console.log("These are values", chores);
     axiosWithAuth()
-      .post("https://choretracker01.herokuapp.com/api/chores/1", values)
+      .post(`/api/chores/${id}`, chores)
         .then(res => {
-          console.log("success", res);
-          console.log("this is response data", res.data)
+          // console.log("success", res);
+          // console.log("this is response data", res.data)
+          // console.log("data imported from children list", ChildrenList.data)
+          setOpen(false);
         })
         .catch(error => console.log(error.response, "Didn't work"));
 
@@ -124,11 +131,7 @@ const ChoreAdder = props => {
                 Add Chore
               </Typography>
               <Formik
-                initialValues={{
-                  name: "",
-                  description: "",
-                  child: "",
-                }}
+
                 validationSchema={SignupSchema}
                 onSubmit={FormSubmit}
               >
@@ -142,7 +145,8 @@ const ChoreAdder = props => {
                         name="name"
                         variant="outlined"
                         fullWidth
-                        onChange={handleChange}
+                        onChange={(e) => setChores({...chores, name: e.target.value})}
+                        value={chores.name}
                         id="name"
                         label="Name of Chore"
                         autoFocus
@@ -158,7 +162,8 @@ const ChoreAdder = props => {
                         error={errors.description && touched.description}
                         variant="outlined"
                         fullWidth
-                        onChange={handleChange}
+                        onChange={(e) => setChores({...chores, description: e.target.value})}
+                        value={chores.description}
                         id="description"
                         label="description"
                         name="description"
@@ -172,26 +177,7 @@ const ChoreAdder = props => {
                         }
                       />
                     </Grid>
-                    <Grid item xs={12}>
-                    <FormControl className={classes.formControl}>
-                      <InputLabel id="child">Assign Child</InputLabel>
-                      <Select
-                        labelId="child"
-                        id="child"
-                        value={child}
-                        onChange={handleChildChange}
-                        autoWidth
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={"Johnny"}>Johnny</MenuItem>
-                        <MenuItem value={"Peter"}>Peter</MenuItem>
-                        <MenuItem value={"Paul"}>Paul</MenuItem>
-                      </Select>
-                      <FormHelperText>Select Child</FormHelperText>
-                    </FormControl>
-                    </Grid>
+
                   </Grid>
                   <Button
                     type="submit"
@@ -200,8 +186,7 @@ const ChoreAdder = props => {
                     color="primary"
                     className={classes.submit}
                     onClick={FormSubmit}
-                    onSubmit={handleClose}
-                  >
+                    onSubmit={handleClose}>
                     Add Chore
                   </Button>
                 </Form>
