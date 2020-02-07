@@ -183,7 +183,7 @@ const SignUp = props => {
                 Sign Up
               </Button>
               <Typography>
-                Already Have An Account <Link to="/">Click Here</Link>
+                Already Have An Account <Link to="/login">Click Here</Link>
               </Typography>
 
             </Form>
